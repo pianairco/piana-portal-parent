@@ -1,0 +1,20 @@
+{
+  "asset-handlers": [
+    {
+      "paths": [
+        "E:/000-Dadekavan/products/geo-fence/geo-fence/notify-ui/dist/notify-ui"
+      ],
+      "uris": [
+        "/"
+      ]
+    }
+  ],
+  "http-handlers": [
+    {
+      "handler": "ir.piana.dev.portal.web.handler.PianaBaseHttpHandler",
+      "uris": [
+        "/hello-world"
+      ]
+    }
+  ]
+}

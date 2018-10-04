@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<qbean name="web-portal"
+        class="ir.piana.dev.portal.web.module.WebPortalModule">
+    <servers>
+        <server>
+            <name>server1</name>
+            <listeners>
+                <listener>
+                    <name>listener1</name>
+                    <host>localhost</host>
+                    <port>8080</port>
+                    <ssl-config>
+                        <key-store-path>keystore.jks</key-store-path>
+                        <key-store-pass>password</key-store-pass>
+                    </ssl-config>
+                </listener>
+            </listeners>
+        </server>
+    </servers>
+
+    <redirectors>
+        <redirector>
+            <name>redirector1</name>
+            <host>localhost</host>
+            <port>9090</port>
+            <!--<ssl-config>-->
+                <!--<key-store-path>keystore.jks</key-store-path>-->
+                <!--<key-store-pass>password</key-store-pass>-->
+            <!--</ssl-config>-->
+            <redirec-to>
+                <server>server1</server>
+                <listener>listener1</listener>
+            </redirec-to>
+        </redirector>
+        <redirector>
+            <name>redirector2</name>
+            <host>localhost</host>
+            <port>7070</port>
+            <ssl-config>
+                <key-store-path>keystore.jks</key-store-path>
+                <key-store-pass>password</key-store-pass>
+            </ssl-config>
+            <redirec-to>
+                <server>server1</server>
+                <listener>listener1</listener>
+            </redirec-to>
+        </redirector>
+    </redirectors>
+</qbean>
+

@@ -1,0 +1,29 @@
+<logger name="main-logger"
+        class="org.jpos.q2.qbean.LoggerAdaptor">
+    <log-listener class="org.jpos.util.ProtectedLogListener">
+        <!--<property name="protect"-->
+        <!--value="2 35 58" />-->
+        <!--<property name="wipe"-->
+        <!--value="52 54 64 96 128" />-->
+    </log-listener>
+
+    <log-listener class="org.jpos.util.DailyLogListener">
+        <property name="window"
+                  value="3600" />
+        <property name="maxsize"
+                  value="524288000" />
+        <property name="prefix"
+                  value="./log/main-logger" />
+        <property name="suffix"
+                  value=".log" />
+        <property name="date-format"
+                  value="-yyyy.MM.dd-HH" />
+        <property name="compression-format"
+                  value="gzip" />
+        <property name="compression-buffer-size"
+                  value="52428800" />
+    </log-listener>
+
+    <log-listener class="org.jpos.util.SimpleLogListener" />
+</logger>
+
