@@ -16,6 +16,12 @@
                     </ssl-config>
                 </listener>
             </listeners>
+            <session>
+                <name>Piana-Session</name>
+                <cache-size>500</cache-size>
+                <expired-second>9000</expired-second>
+            </session>
+            <piana-role-providable></piana-role-providable>
         </server>
     </servers>
 

@@ -30,8 +30,8 @@ public class PianaHttpHandlerStatic extends StaticHttpHandler
     @Override
     public final void service(final Request request, final Response response)
             throws Exception {
-        PianaSecure.getSessionManager(serverName)
-                .retrieveSession(request, response);
+//        PianaSecure.getSessionManager(serverName)
+//                .retrieveSession(request, response);
         super.service(request, response);
     }
 

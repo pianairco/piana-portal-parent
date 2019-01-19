@@ -5,13 +5,13 @@
         "E:/000-Dadekavan/products/geo-fence/geo-fence/notify-ui/dist/notify-ui"
       ],
       "uris": [
-        "/"
+        "/", "/geofenceWAR/", "/sarab/geofenceWAR/"
       ]
     }
   ],
   "http-handlers": [
     {
-      "handler": "ir.piana.dev.portal.web.handler.PianaBaseHttpHandler",
+      "handler": "ir.piana.dev.portal.web.handler.PianaHttpHandlerBase",
       "uris": [
         "/hello-world"
       ]

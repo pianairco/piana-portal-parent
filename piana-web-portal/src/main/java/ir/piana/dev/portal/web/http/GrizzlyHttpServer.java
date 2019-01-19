@@ -3,9 +3,7 @@ package ir.piana.dev.portal.web.http;
 import ir.piana.dev.portal.web.error.CriticalError;
 import org.apache.log4j.Logger;
 import org.glassfish.grizzly.GrizzlyFuture;
-import org.glassfish.grizzly.http.server.HttpHandler;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.http.server.NetworkListener;
+import org.glassfish.grizzly.http.server.*;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -23,6 +21,9 @@ public class GrizzlyHttpServer {
     public GrizzlyHttpServer(String name) {
         this.name = name;
         httpServer = new HttpServer();
+        httpServer.getServerConfiguration().setSessionManager(DefaultSessionManager.instance());
+        SessionManager sessionManager = httpServer.getServerConfiguration().getSessionManager();
+        System.out.println(sessionManager);
     }
 
     public void startService() throws CriticalError {

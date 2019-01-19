@@ -70,6 +70,43 @@ public class PianaSessionManager {
 //        return pianaSession;
 //    }
 
+    public PianaSession newSession(
+            Request request, Response response) {
+        PianaSession pianaSession = null;
+        String sessionKey = null;
+        try {
+            sessionKey = request.getHeader(session.getName());
+            if(sessionKey != null) {
+                throw new RuntimeException();
+            }
+            sessionKey = createSessionKey();
+            pianaSession = (PianaSession) cacheProvider
+                    .retrieve(sessionKey);
+            pianaSession.setSessionKey(sessionKey);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+//        response.addHeader(session.getName(), sessionKey);
+        return pianaSession;
+    }
+
+    public void clearSession(
+            Request request, Response response) {
+        PianaSession pianaSession = null;
+        String sessionKey = null;
+        try {
+            sessionKey = request.getHeader(session.getName());
+            if(sessionKey == null) {
+                throw new RuntimeException();
+            }
+            pianaSession = (PianaSession) cacheProvider.remove(sessionKey);
+            pianaSession.setSessionKey(null);
+            pianaSession.setExistance(null);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
+
     public PianaSession retrieveSession(
             Request request, Response response) {
         PianaSession pianaSession = null;
@@ -85,7 +122,23 @@ public class PianaSessionManager {
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        response.addHeader(session.getName(), sessionKey);
+//        response.addHeader(session.getName(), sessionKey);
+        return pianaSession;
+    }
+
+    public PianaSession retrieveSessionIfExist(
+            Request request, Response response) {
+        PianaSession pianaSession = null;
+        try {
+            String sessionKey = null;
+            sessionKey = request.getHeader(session.getName());
+            if(sessionKey != null && !sessionKey.isEmpty()) {
+                pianaSession = (PianaSession) cacheProvider
+                        .retrieve(sessionKey);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
         return pianaSession;
     }
 
@@ -124,5 +177,4 @@ public class PianaSessionManager {
     private static String createSessionKey() {
         return UUID.randomUUID().toString();
     }
-
 }

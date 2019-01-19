@@ -41,8 +41,10 @@ public class PianaHttpHandlerBase extends HttpHandler
     @Override
     public final void service(Request request, Response response)
             throws Exception {
-        if(!authorize(request, response))
-            return;
+        if(!authorize(request, response)) {
+         response.setStatus(HttpStatus.UNAUTHORIZED_401);
+         return;
+        }
 
         if (request.getMethod() == Method.GET) {
             this.get(request, response);
@@ -66,17 +68,17 @@ public class PianaHttpHandlerBase extends HttpHandler
     }
 
     private final boolean authorize(Request request, Response response) {
-        PianaSession pianaSession = PianaSecure.getSessionManager(serverName)
-                .retrieveSession(request, response);
         if(roleArray.size() == 0)
             return true;
         else if(roleArray.size() > 0 && roleProvidable == null)
             return false;
         else {
-            Object existance = pianaSession.getExistance();
-            if(existance == null)
+            PianaSession pianaSession = PianaSecure.getSessionManager(serverName)
+                    .retrieveSessionIfExist(request, response);
+            if(pianaSession == null || pianaSession.getExistance() == null)
                 return false;
             else {
+                Object existance = pianaSession.getExistance();
                 List<String> providedRoles = roleProvidable.provideRoles((String) existance);
                 if(providedRoles.size() > 0) {
                     for (String role : roleArray) {
@@ -92,8 +94,8 @@ public class PianaHttpHandlerBase extends HttpHandler
         return false;
     }
 
-    protected final void setAuthorize(Request request, Response response, String authorizationKey) {
-        PianaAuthorizer.authorize(serverName, request, response, authorizationKey);
+    protected final String setAuthorize(Request request, Response response, String authorizationKey) {
+        return PianaAuthorizer.authorize(serverName, request, response, authorizationKey);
     }
 
     protected final void clearAuthorize(Request request, Response response) {
